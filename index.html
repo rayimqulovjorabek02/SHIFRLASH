@@ -10,7 +10,8 @@
     <meta name="keywords" content="shifrlash, cryptography, crypto.js, matnni shifrlash, xavfsizlik">
     <meta name="author" content="Jo'rabek Rayimqulov">
 
-  <link rel="icon" type="image/png" href="shifr_icon.png">
+  <link rel="icon" type="image/png" href="shifr_icon.png"
+  <meta name="description" content="Shifrlash algoritmlarini o'rganish platformasi">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -35,7 +36,6 @@
     <button class="nav-btn" onclick="showPanel('rsa',this)">12. RSA</button>
   </nav>
 
-  <!-- HELPER MACRO: panel template -->
   <!-- 1. KLASSIK -->
   <div class="panel active" id="panel-classic">
     <div class="section">
@@ -56,11 +56,11 @@
         <button class="btn primary" onclick="classicEncrypt()">Shifrlash</button>
         <button class="btn" onclick="classicClear()">Tozalash</button>
       </div>
-      <div class="result-label">Natija</div>
+      <div class="result-label">Shifrlangan natija</div>
       <div class="result-box" id="classic-result">—</div>
       <div id="classic-decrypt-action" style="display:none" class="decrypt-action">
-        <span class="decrypt-hint">Shifrlangan natija</span>
-        <button class="btn btn-decrypt" onclick="classicDecryptFromResult()">Deshifrlash</button>
+        <span class="decrypt-hint">↑ Shifrlangan natija asosida</span>
+        <button class="btn btn-decrypt" onclick="classicDecryptFromResult()">🔓 Deshifrlash</button>
       </div>
       <div id="classic-decrypted-box" style="display:none">
         <div class="result-label">Deshifrlangan natija</div>
@@ -91,11 +91,11 @@
         <button class="btn primary" onclick="simpleEncrypt()">Shifrlash</button>
         <button class="btn" onclick="simpleClear()">Tozalash</button>
       </div>
-      <div class="result-label">Natija</div>
+      <div class="result-label">Shifrlangan natija</div>
       <div class="result-box" id="simple-result">—</div>
       <div id="simple-decrypt-action" style="display:none" class="decrypt-action">
-        <span class="decrypt-hint">Shifrlangan natija</span>
-        <button class="btn btn-decrypt" onclick="simpleDecryptFromResult()">Deshifrlash</button>
+        <span class="decrypt-hint">↑ Shifrlangan natija asosida</span>
+        <button class="btn btn-decrypt" onclick="simpleDecryptFromResult()">🔓 Deshifrlash</button>
       </div>
       <div id="simple-decrypted-box" style="display:none">
         <div class="result-label">Deshifrlangan natija</div>
@@ -107,22 +107,23 @@
   <!-- 3. BIR TOMONLAMA O'RIN ALMASHTIRISH -->
   <div class="panel" id="panel-perm1">
     <div class="section">
-      <div class="section-title">Bir tomonlama o'rin almashtirish (kalit yordamida)</div>
-      <p class="hint" style="margin-bottom:12px">Kalit harflari alfavit tartibida raqamlaning. Matn kalit uzunligi kenglikdagi ustunlarga yoziladi, keyin raqam tartibida o'qiladi.</p>
+      <div class="section-title">Bir tomonlama o'rin almashtirish (Columnar Transposition)</div>
+      <p class="hint" style="margin-bottom:12px">Matn kalit uzunligidagi ustunlarga yoziladi. Ustunlar kalit harflari alifbo tartibiga ko'ra raqamlanib, shu tartibda o'qiladi.</p>
       <div class="row">
-        <div class="field"><label>Kalit so'z</label><input type="text" id="p1-key" value="SECRET"></div>
-        <div class="field"><label>Ustun tartibi</label><div class="info-mini" id="p1-info">Kalit harflari tartibini belgilaydi</div></div>
+        <div class="field"><label>Kalit so'z (harflar)</label><input type="text" id="p1-key" value="SECRET" placeholder="masalan: ZEBRA"></div>
+        <div class="field"><label>Ustun tartibi (avtomatik)</label><div class="info-mini" id="p1-info">Kalit kiritilganda ko'rsatiladi</div></div>
       </div>
-      <div class="field"><label>Matn</label><textarea id="p1-input">SALOM DUNYO BU SHIFRLASH</textarea></div>
+      <div class="field"><label>Matn</label><textarea id="p1-input">SALOM DUNYO BU SHIFRLASH USULI</textarea></div>
       <div class="btn-row">
         <button class="btn primary" onclick="perm1Encrypt()">Shifrlash</button>
+        <button class="btn secondary" onclick="perm1ShowGrid()">Jadvalni ko'rish</button>
         <button class="btn" onclick="perm1Clear()">Tozalash</button>
       </div>
-      <div class="result-label">Natija</div>
+      <div class="result-label">Shifrlangan natija</div>
       <div class="result-box" id="p1-result">—</div>
       <div id="p1-decrypt-action" style="display:none" class="decrypt-action">
-        <span class="decrypt-hint">Shifrlangan natija</span>
-        <button class="btn btn-decrypt" onclick="perm1DecryptFromResult()">Deshifrlash</button>
+        <span class="decrypt-hint">↑ Shifrlangan natija asosida</span>
+        <button class="btn btn-decrypt" onclick="perm1DecryptFromResult()">🔓 Deshifrlash</button>
       </div>
       <div id="p1-decrypted-box" style="display:none">
         <div class="result-label">Deshifrlangan natija</div>
@@ -136,21 +137,21 @@
   <div class="panel" id="panel-perm2">
     <div class="section">
       <div class="section-title">Ikki tomonlama o'rin almashtirish (Double Transposition)</div>
-      <p class="hint" style="margin-bottom:12px">Bir tomonlama jarayon ikki marta ketma-ket qo'llanadi — birinchi va ikkinchi kalit bilan.</p>
+      <p class="hint" style="margin-bottom:12px">Bir tomonlama transpozitsiya ketma-ket ikki marta qo'llanadi — birinchi va ikkinchi kalit bilan. Xavfsizlik ikki barobar oshadi.</p>
       <div class="row">
-        <div class="field"><label>Birinchi kalit</label><input type="text" id="p2-key1" value="CIPHER"></div>
-        <div class="field"><label>Ikkinchi kalit</label><input type="text" id="p2-key2" value="LOCK"></div>
+        <div class="field"><label>Birinchi kalit</label><input type="text" id="p2-key1" value="CIPHER" placeholder="masalan: KALIT"></div>
+        <div class="field"><label>Ikkinchi kalit</label><input type="text" id="p2-key2" value="LOCK" placeholder="masalan: MAXFI"></div>
       </div>
-      <div class="field"><label>Matn</label><textarea id="p2-input">SALOM DUNYO BU SHIFRLASH</textarea></div>
+      <div class="field"><label>Matn</label><textarea id="p2-input">SALOM DUNYO BU IKKI TOMONLAMA SHIFRLASH</textarea></div>
       <div class="btn-row">
         <button class="btn primary" onclick="perm2Encrypt()">Shifrlash</button>
         <button class="btn" onclick="perm2Clear()">Tozalash</button>
       </div>
-      <div class="result-label">Natija</div>
+      <div class="result-label">Shifrlangan natija</div>
       <div class="result-box" id="p2-result">—</div>
       <div id="p2-decrypt-action" style="display:none" class="decrypt-action">
-        <span class="decrypt-hint">Shifrlangan natija</span>
-        <button class="btn btn-decrypt" onclick="perm2DecryptFromResult()">Deshifrlash</button>
+        <span class="decrypt-hint">↑ Shifrlangan natija asosida</span>
+        <button class="btn btn-decrypt" onclick="perm2DecryptFromResult()">🔓 Deshifrlash</button>
       </div>
       <div id="p2-decrypted-box" style="display:none">
         <div class="result-label">Deshifrlangan natija</div>
@@ -164,21 +165,21 @@
   <div class="panel" id="panel-vernam">
     <div class="section">
       <div class="section-title">Vernam shifri — One-Time Pad (OTP)</div>
-      <p class="hint" style="margin-bottom:12px">Kalit matn uzunligi bilan teng bo'lishi va faqat bir marta ishlatilishi kerak. Mutlaq kriptografik bardoshlilik ta'minlanadi.</p>
+      <p class="hint" style="margin-bottom:12px">Kalit matn uzunligi bilan teng bo'lishi va faqat bir marta ishlatilishi kerak. Matematik jihatdan mutlaq kriptografik bardoshlilik ta'minlanadi.</p>
       <div class="row">
-        <div class="field"><label>Kalit (matn bilan teng uzunlikda)</label><input type="text" id="vn-key" value="XKUZMRIOASL"></div>
-        <div class="field"><label></label><button class="btn" style="margin-top:20px;width:100%" onclick="vernamGenKey()">Tasodifiy kalit</button></div>
+        <div class="field"><label>Kalit (matn uzunligidek, faqat A-Z)</label><input type="text" id="vn-key" value="XKUZMRIOASL"></div>
+        <div class="field" style="display:flex;align-items:flex-end"><button class="btn" style="width:100%" onclick="vernamGenKey()">🎲 Tasodifiy kalit</button></div>
       </div>
-      <div class="field"><label>Matn (faqat lotin harflari)</label><textarea id="vn-input">SALOMDUNYO</textarea></div>
+      <div class="field"><label>Matn (faqat A-Z lotin harflari)</label><textarea id="vn-input">SALOMDUNYO</textarea></div>
       <div class="btn-row">
         <button class="btn primary" onclick="vernamEncrypt()">Shifrlash</button>
         <button class="btn" onclick="vernamClear()">Tozalash</button>
       </div>
-      <div class="result-label">Natija</div>
+      <div class="result-label">Shifrlangan natija</div>
       <div class="result-box" id="vn-result">—</div>
       <div id="vn-decrypt-action" style="display:none" class="decrypt-action">
-        <span class="decrypt-hint">Shifrlangan natija</span>
-        <button class="btn btn-decrypt" onclick="vernamDecryptFromResult()">Deshifrlash</button>
+        <span class="decrypt-hint">↑ Shifrlangan natija asosida</span>
+        <button class="btn btn-decrypt" onclick="vernamDecryptFromResult()">🔓 Deshifrlash</button>
       </div>
       <div id="vn-decrypted-box" style="display:none">
         <div class="result-label">Deshifrlangan natija</div>
@@ -192,21 +193,21 @@
   <div class="panel" id="panel-gamma">
     <div class="section">
       <div class="section-title">Gammalash — LFSR asosida oqim shifrlash</div>
-      <p class="hint" style="margin-bottom:12px">LFSR (Linear Feedback Shift Register) yordamida psevdo-tasodifiy gamma hosil qilinadi va matn baytlari bilan XOR qilinadi.</p>
+      <p class="hint" style="margin-bottom:12px">LFSR (Linear Feedback Shift Register) yordamida psevdo-tasodifiy gamma hosil qilinadi va har bir bayt XOR orqali shifrlanadi.</p>
       <div class="row">
-        <div class="field"><label>Boshlang'ich holat / kalit (seed)</label><input type="number" id="gm-seed" value="13579" min="1"></div>
-        <div class="field"><label>Tap pozitsiyalari (vergul bilan)</label><input type="text" id="gm-taps" value="16,15,13,4"></div>
+        <div class="field"><label>Kalit / boshlang'ich holat (seed, 1-65535)</label><input type="number" id="gm-seed" value="13579" min="1" max="65535"></div>
+        <div class="field"><label>Tap pozitsiyalari (vergul bilan, masalan: 16,15,13,4)</label><input type="text" id="gm-taps" value="16,15,13,4"></div>
       </div>
-      <div class="field"><label>Matn</label><textarea id="gm-input">Salom! Bu gamma shifrlash.</textarea></div>
+      <div class="field"><label>Matn</label><textarea id="gm-input">Salom! Bu gamma shifrlash namunasi.</textarea></div>
       <div class="btn-row">
         <button class="btn primary" onclick="gammaEncrypt()">Shifrlash</button>
         <button class="btn" onclick="gammaClear()">Tozalash</button>
       </div>
-      <div class="result-label">Natija (HEX)</div>
+      <div class="result-label">Shifrlangan natija (HEX)</div>
       <div class="result-box" id="gm-result">—</div>
       <div id="gm-decrypt-action" style="display:none" class="decrypt-action">
-        <span class="decrypt-hint">Shifrlangan natija</span>
-        <button class="btn btn-decrypt" onclick="gammaDecryptFromResult()">Deshifrlash</button>
+        <span class="decrypt-hint">↑ Shifrlangan natija asosida</span>
+        <button class="btn btn-decrypt" onclick="gammaDecryptFromResult()">🔓 Deshifrlash</button>
       </div>
       <div id="gm-decrypted-box" style="display:none">
         <div class="result-label">Deshifrlangan natija</div>
@@ -219,23 +220,23 @@
   <!-- 7. PLAYFAIR -->
   <div class="panel" id="panel-playfair">
     <div class="section">
-      <div class="section-title">Playfair — Uitson ikkilik kvadrati (5x5 matrisa)</div>
-      <p class="hint" style="margin-bottom:12px">Kalit asosida 5x5 matrisa tuziladi. Juft harflar matrisada topiladi va maxsus qoidalar bo'yicha almashtiriladi. J harfi I bilan birlashtiriladi.</p>
+      <div class="section-title">Playfair — Uitson ikkilik kvadrati (5×5 matrisa)</div>
+      <p class="hint" style="margin-bottom:12px">Kalit asosida 5×5 matrisa tuziladi. Har 2 harfli juft matrisada topiladi va 3 qoidaga ko'ra almashtiriladi: bir qatorda, bir ustunda, to'rtburchak. J harfi I bilan birlashtiriladi.</p>
       <div class="row">
-        <div class="field"><label>Kalit so'z</label><input type="text" id="pf-key" value="MONARCHY"></div>
-        <div class="field"><label>5x5 Matrisa</label><div class="matrix-display" id="pf-matrix">—</div></div>
+        <div class="field"><label>Kalit so'z</label><input type="text" id="pf-key" value="MONARCHY" oninput="playfairShowMatrix()"></div>
+        <div class="field"><label>5×5 Matrisa</label><div class="matrix-display" id="pf-matrix">—</div></div>
       </div>
-      <div class="field"><label>Matn (faqat lotin harflari)</label><textarea id="pf-input">HELLO WORLD</textarea></div>
+      <div class="field"><label>Matn (faqat lotin harflari A-Z)</label><textarea id="pf-input">HELLO WORLD</textarea></div>
       <div class="btn-row">
         <button class="btn primary" onclick="playfairEncrypt()">Shifrlash</button>
-        <button class="btn" onclick="playfairShowMatrix()">Matrisa ko'rish</button>
+        <button class="btn secondary" onclick="playfairShowMatrix()">Matrisa yangilash</button>
         <button class="btn" onclick="playfairClear()">Tozalash</button>
       </div>
-      <div class="result-label">Natija</div>
+      <div class="result-label">Shifrlangan natija</div>
       <div class="result-box" id="pf-result">—</div>
       <div id="pf-decrypt-action" style="display:none" class="decrypt-action">
-        <span class="decrypt-hint">Shifrlangan natija</span>
-        <button class="btn btn-decrypt" onclick="playfairDecryptFromResult()">Deshifrlash</button>
+        <span class="decrypt-hint">↑ Shifrlangan natija asosida</span>
+        <button class="btn btn-decrypt" onclick="playfairDecryptFromResult()">🔓 Deshifrlash</button>
       </div>
       <div id="pf-decrypted-box" style="display:none">
         <div class="result-label">Deshifrlangan natija</div>
@@ -248,21 +249,21 @@
   <div class="panel" id="panel-zigzag">
     <div class="section">
       <div class="section-title">Ryugzag (Rail Fence / Zig-Zag) shifri</div>
-      <p class="hint" style="margin-bottom:12px">Matn bir nechta "rail" (pog'ona) bo'yicha zigzag yoziladi, keyin qatorlar ketma-ket o'qiladi.</p>
+      <p class="hint" style="margin-bottom:12px">Matn bir nechta "rel" (pog'ona) bo'yicha zigzag tartibda yoziladi, keyin qatorlar ketma-ket o'qiladi. Transpozitsiya turi.</p>
       <div class="row">
-        <div class="field"><label>Qatorlar soni (rail)</label><input type="number" id="zz-rails" value="3" min="2" max="10"></div>
-        <div class="field"><label>Vizualizatsiya</label><div class="matrix-display" id="zz-visual">—</div></div>
+        <div class="field"><label>Rellar soni (2-10)</label><input type="number" id="zz-rails" value="3" min="2" max="10"></div>
+        <div class="field"><label>Zigzag vizualizatsiyasi</label><div class="matrix-display" id="zz-visual" style="font-size:11px">Shifrlash bosilganda ko'rsatiladi</div></div>
       </div>
-      <div class="field"><label>Matn</label><textarea id="zz-input">SALOM DUNYO BU ZIGZAG</textarea></div>
+      <div class="field"><label>Matn</label><textarea id="zz-input">SALOM DUNYO BU ZIGZAG SHIFRI</textarea></div>
       <div class="btn-row">
         <button class="btn primary" onclick="zigzagEncrypt()">Shifrlash</button>
         <button class="btn" onclick="zigzagClear()">Tozalash</button>
       </div>
-      <div class="result-label">Natija</div>
+      <div class="result-label">Shifrlangan natija</div>
       <div class="result-box" id="zz-result">—</div>
       <div id="zz-decrypt-action" style="display:none" class="decrypt-action">
-        <span class="decrypt-hint">Shifrlangan natija</span>
-        <button class="btn btn-decrypt" onclick="zigzagDecryptFromResult()">Deshifrlash</button>
+        <span class="decrypt-hint">↑ Shifrlangan natija asosida</span>
+        <button class="btn btn-decrypt" onclick="zigzagDecryptFromResult()">🔓 Deshifrlash</button>
       </div>
       <div id="zz-decrypted-box" style="display:none">
         <div class="result-label">Deshifrlangan natija</div>
@@ -271,18 +272,20 @@
     </div>
   </div>
 
-  <!-- 9. REJIMA-->
+  <!-- 9. REJIMA -->
   <div class="panel" id="panel-route">
     <div class="section">
-      <div class="section-title">Rejima shifri — Marshrut shifrlash</div>
-      <p class="hint" style="margin-bottom:12px">Matn to'rtburchak matrisaga yoziladi, keyin tanlangan marshrut (ustun, spiral, diagonal) bo'yicha o'qiladi.</p>
+      <div class="section-title">Rejima shifri — Marshrut shifrlash (Route Cipher)</div>
+      <p class="hint" style="margin-bottom:12px">Matn to'rtburchak matrisaga yoziladi, keyin tanlangan marshrut (ustun, spiral, diagonal) bo'yicha o'qiladi. Klassik transpozitsiya turi.</p>
       <div class="row">
         <div class="field"><label>Ustunlar soni</label><input type="number" id="rt-cols" value="5" min="2" max="20"></div>
         <div class="field"><label>O'qish tartibi</label>
           <select id="rt-mode">
             <option value="col-tb">Ustun (yuqoridan pastga)</option>
             <option value="col-bt">Ustun (pastdan yuqoriga)</option>
-            <option value="spiral">Spiral (soat yo'nalishida)</option>
+            <option value="row-lr">Qator (chapdan o'ngga)</option>
+            <option value="row-rl">Qator (o'ngdan chapga)</option>
+            <option value="spiral">Spiral (soat yo'nalishi)</option>
             <option value="diag">Diagonal</option>
           </select>
         </div>
@@ -292,16 +295,17 @@
         <button class="btn primary" onclick="routeEncrypt()">Shifrlash</button>
         <button class="btn" onclick="routeClear()">Tozalash</button>
       </div>
-      <div class="result-label">Matrisa va natija</div>
+      <div class="result-label">Matrisa va shifrlangan natija</div>
       <div class="result-box" id="rt-result">—</div>
       <div id="rt-decrypt-action" style="display:none" class="decrypt-action">
-        <span class="decrypt-hint">Shifrlangan natija</span>
-        <button class="btn btn-decrypt" onclick="routeDecryptFromResult()">Deshifrlash</button>
+        <span class="decrypt-hint">↑ Shifrlangan natija asosida</span>
+        <button class="btn btn-decrypt" onclick="routeDecryptFromResult()">🔓 Deshifrlash</button>
       </div>
       <div id="rt-decrypted-box" style="display:none">
         <div class="result-label">Deshifrlangan natija</div>
         <div class="result-box decrypted-box" id="rt-decrypted">—</div>
       </div>
+      <div id="rt-matrix-view"></div>
     </div>
   </div>
 
@@ -309,17 +313,19 @@
   <div class="panel" id="panel-stegano">
     <div class="section">
       <div class="section-title">Steganografiya — matnni matn ichiga yashirish</div>
+      <p class="hint" style="margin-bottom:12px">Unicode ko'rinmas belgilar (zero-width) yordamida maxfiy matn qoplovchi matn ichiga yashiriladi. Ko'z bilan ko'rib bo'lmaydi.</p>
       <div class="row">
-        <div class="field"><label>Maxfiy matn</label><textarea id="steg-secret">MAXFIY XABAR</textarea></div>
-        <div class="field"><label>Qoplovchi matn</label><textarea id="steg-cover">Bu oddiy xat. Sizga tabrik yo'llayman. Hammasi yaxshi.</textarea></div>
+        <div class="field"><label>Maxfiy matn (yashiriladigan)</label><textarea id="steg-secret">MAXFIY XABAR</textarea></div>
+        <div class="field"><label>Qoplovchi matn (ko'rinadigan)</label><textarea id="steg-cover">Bu oddiy xat. Sizga tabrik yo'llayman. Hammasi yaxshi.</textarea></div>
       </div>
       <div class="btn-row">
         <button class="btn primary" onclick="stegHide()">Yashirish</button>
-        <button class="btn" onclick="stegReveal()">Ochish</button>
+        <button class="btn secondary" onclick="stegReveal()">Ochish / Topish</button>
+        <button class="btn" onclick="stegClear()">Tozalash</button>
       </div>
       <div class="result-label">Natija</div>
       <div class="result-box" id="steg-result">—</div>
-      <p class="hint">Unicode zero-width belgilar yordamida maxfiy matn yashiriladi</p>
+      <p class="hint">Yashirgandan so'ng "Ochish" bosing — maxfiy matn topiladi</p>
     </div>
   </div>
 
@@ -327,9 +333,10 @@
   <div class="panel" id="panel-dh">
     <div class="section">
       <div class="section-title">Diffie-Hellman kalit almashinuvi protokoli</div>
+      <p class="hint" style="margin-bottom:12px">Ikki tomon ochiq kanal orqali umumiy sir kalitni xavfsiz tarzda hosil qiladi. Hisob-kitob bosqichlari ko'rsatiladi.</p>
       <div class="row three">
-        <div class="field"><label>Tub son p</label><input type="number" id="dh-p" value="23"></div>
-        <div class="field"><label>Generator g</label><input type="number" id="dh-g" value="5"></div>
+        <div class="field"><label>Tub son p</label><input type="number" id="dh-p" value="23" min="5"></div>
+        <div class="field"><label>Generator g</label><input type="number" id="dh-g" value="5" min="2"></div>
         <div class="field"><button class="btn primary" style="margin-top:22px;width:100%" onclick="dhGenerate()">Hisoblash</button></div>
       </div>
       <div id="dh-steps"></div>
@@ -339,21 +346,22 @@
   <!-- 12. RSA -->
   <div class="panel" id="panel-rsa">
     <div class="section">
-      <div class="section-title">RSA algoritmi</div>
+      <div class="section-title">RSA algoritmi — ochiq kalitli shifrlash</div>
+      <p class="hint" style="margin-bottom:12px">Ikkita tub son (p, q) asosida ochiq va yopiq kalit juftligi hosil qilinadi. Barcha hisob-kitoblar ko'rsatiladi.</p>
       <div class="row">
-        <div class="field"><label>p (tub son)</label><input type="number" id="rsa-p" value="61"></div>
-        <div class="field"><label>q (tub son)</label><input type="number" id="rsa-q" value="53"></div>
+        <div class="field"><label>p (tub son)</label><input type="number" id="rsa-p" value="61" min="2"></div>
+        <div class="field"><label>q (tub son)</label><input type="number" id="rsa-q" value="53" min="2"></div>
       </div>
       <div class="btn-row"><button class="btn primary" onclick="rsaGenKeys()">Kalitlar hosil qilish</button></div>
       <div id="rsa-keys"></div>
       <hr class="divider">
-      <div class="field"><label>Shifrlash uchun raqam (n dan kichik)</label><input type="number" id="rsa-msg" value="42"></div>
-      <div class="btn-row"><button class="btn primary" onclick="rsaEncrypt()">Shifrlash (ochiq kalit)</button></div>
-      <div class="result-label">Natija</div>
+      <div class="field"><label>Shifrlash uchun raqam M (n dan kichik bo'lishi kerak)</label><input type="number" id="rsa-msg" value="42" min="1"></div>
+      <div class="btn-row"><button class="btn primary" onclick="rsaEncrypt()">Shifrlash (ochiq kalit bilan)</button></div>
+      <div class="result-label">Shifrlangan natija</div>
       <div class="result-box" id="rsa-result">—</div>
       <div id="rsa-decrypt-action" style="display:none" class="decrypt-action">
-        <span class="decrypt-hint">Shifrlangan natija</span>
-        <button class="btn btn-decrypt" onclick="rsaDecrypt()">Deshifrlash (yopiq kalit)</button>
+        <span class="decrypt-hint">↑ Shifrlangan natija asosida</span>
+        <button class="btn btn-decrypt" onclick="rsaDecrypt()">🔓 Deshifrlash (yopiq kalit bilan)</button>
       </div>
       <div id="rsa-decrypted-box" style="display:none">
         <div class="result-label">Deshifrlangan natija</div>
@@ -361,6 +369,7 @@
       </div>
     </div>
   </div>
+
 </div>
 <script src="crypto.js"></script>
 </body>
