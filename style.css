@@ -369,6 +369,91 @@ body {
   font-style: italic;
 }
 
+/* ===== MATRIX DISPLAY ===== */
+.matrix-display {
+  background: #0a0a0a;
+  border: 1px solid #222;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: #00ff88;
+  white-space: pre;
+  min-height: 44px;
+  letter-spacing: 1px;
+  line-height: 1.6;
+}
+
+.info-mini {
+  background: #0a0a0a;
+  border: 1px solid #222;
+  border-radius: 6px;
+  padding: 9px 12px;
+  font-size: 12px;
+  color: #666;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+}
+
+/* ===== DECRYPT ACTION ===== */
+.decrypt-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+  padding: 8px 14px;
+  background: #0d1a12;
+  border: 1px dashed #00ff8830;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  animation: fadeIn 0.2s ease;
+}
+
+.decrypt-hint {
+  font-size: 12px;
+  color: #00ff8870;
+  font-style: italic;
+  letter-spacing: 0.5px;
+}
+
+.btn-decrypt {
+  padding: 7px 16px;
+  font-size: 13px;
+  font-family: inherit;
+  border: 1px solid #00ff8840;
+  border-radius: 6px;
+  background: #00ff8812;
+  color: #00ff88;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-weight: 600;
+}
+
+.btn-decrypt:hover {
+  background: #00ff8820;
+  border-color: #00ff8870;
+}
+
+.btn-decrypt:active {
+  transform: scale(0.97);
+}
+
+/* Result box when used as encrypt source — rounded bottom removed */
+.result-box.has-action {
+  border-radius: 6px 6px 0 0;
+  border-bottom-color: transparent;
+}
+
+/* Decrypted result box */
+.decrypted-box {
+  color: #88ddff;
+  border-color: #0066cc40;
+  background: #0a0f14;
+  margin-top: 4px;
+  animation: fadeIn 0.25s ease;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 600px) {
   .row, .row.three {
